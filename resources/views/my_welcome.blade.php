@@ -30,7 +30,7 @@
                 <ul class="navbar-nav ms-auto py-4 py-lg-0">
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('index')}}">Home</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{url('about')}}">About</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Sample Post</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{url('write')}}">Write Post</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{url('contact')}}">Contact</a></li>
                 </ul>
             </div>
@@ -49,9 +49,10 @@
             </div>
         </div>
     </header>
-    @yield('content')
+
     <!-- Main Content-->
-    
+    @yield('content')
+
     <!-- Footer-->
     <footer class="border-top">
         <div class="container px-4 px-lg-5">
@@ -92,7 +93,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="{{ asset('frontend/js/scripts.js')}}">
-        </script>
+    </script>
 </body>
 
 </html>

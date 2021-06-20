@@ -1,9 +1,15 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DemoController;
 use App\Http\Controllers\CricbuzzController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Testcontroller;
 use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +24,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('pages.index');
+    //return view('pages.index');
+    return redirect('/service/landing');
 })->name('index');
 
 Route::get('contact', function () {
@@ -74,6 +81,10 @@ Route::get('justRouteTest', function () {
 
 Route::get('login', [LoginController::class, 'LoginPage']);
 
+Route::get('/home', function () {
+    return view('class_work.home');
+});
+
 Route::post('login', [LoginController::class, 'verify']);
 
 Route::get('nav', [LoginController::class, 'valueSend']);
@@ -91,6 +102,7 @@ Route::get('scores', function () {
 Route::get('getAllUsers', [UserController::class, 'getAllUsers']);
 Route::get('userDetails', [UserController::class, 'userDetails']);
 Route::get('deleteUser/{id}', [UserController::class, 'deleteUser']);
+Route::post('deleteUser/{id}', [UserController::class, 'confDeleteUser']);
 
 Route::get('/Employee', function () {
     $jsonString = file_get_contents(base_path('resources/my_json_files/userData.json'));
@@ -109,3 +121,102 @@ Route::get('/Employee', function () {
 
     print_r($data);
 });
+
+
+Route::get('/write', [PostController::class, "writePost"]);
+Route::get('/add/category', [CategoryController::class, "Add"])->name('add.category');
+Route::post('/add/category', [CategoryController::class, "StoreCategory"])->name('Store.Category');
+
+
+//logout 
+Route::get('/logout', function (Request $request) {
+    $request->session()->flush();
+    return redirect('/book/user/login');
+})->name('logout');
+
+
+//admin
+Route::get('/admin/Dashboard', [AdminController::class, 'AdminDash'])->middleware('loginSession');
+//user
+Route::get('/user/home', [UserController::class, 'UserHome']);
+
+
+
+
+//book_mid_project
+
+//Book_Mid_Project
+Route::get('/book/user/login', function () {
+    return view('Book_Mid_Project.login');
+})->name('login');
+
+Route::post('/book/user/login', [LoginController::class, 'BookProjectUserLogin']);
+
+Route::get('/book/user/signup', function () {
+    return view('Book_Mid_Project.signup');
+});
+
+Route::post('/book/user/signup', [UserController::class, 'UserRegistration']);
+
+Route::get('/service/landing', function () {
+    return view('Book_Mid_Project.landing_page.landing');
+});
+
+Route::get('/book/list', function () {
+    return view('Book_Mid_Project.index');
+});
+
+
+Route::get('/book/bookById', function () {
+    return view('Book_Mid_Project.single_product');
+});
+
+
+Route::get('/book/test', function () {
+    return view('Book_Mid_Project._layout_2');
+});
+
+Route::get('/book/search', function () {
+    return view('Book_Mid_Project.search');
+});
+
+Route::get('/book/cart', function () {
+    return view('Book_Mid_Project.cart');
+});
+
+Route::get('/book/checkout', function () {
+    return view('Book_Mid_Project.checkout');
+});
+
+
+
+//user crud
+Route::get('/user/profile', function () {
+    return view('Book_Mid_Project.user_profile');
+});
+
+Route::get('/user/myaccount', function () {
+    return view('Book_Mid_Project.my-account');
+})->middleware('authorization');
+
+Route::get('/user/edit/profile', function () {
+    return view('Book_Mid_Project.edit_profile');
+});
+
+Route::get('/user/notify', function () {
+    return view('Book_Mid_Project.notification');
+});
+
+Route::get('/user/order/orderId', function () {
+    return view('Book_Mid_Project.order_received');
+});
+
+
+
+//all categories
+
+Route::get('all/cats', [CategoryController::class, 'getAllCategories']);
+
+
+//product
+Route::get('product/create', [ProductController::class, 'create']);
