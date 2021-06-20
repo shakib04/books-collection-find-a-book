@@ -219,4 +219,10 @@ Route::get('all/cats', [CategoryController::class, 'getAllCategories']);
 
 
 //product
+Route::get('product/all', [ProductController::class, 'index']);
 Route::get('product/create', [ProductController::class, 'create']);
+Route::post('product/create', [ProductController::class, 'store']);
+Route::get('product/show/{id}', [ProductController::class, 'show']);
+Route::get('product/edit/{id}', [ProductController::class, 'edit']);
+Route::post('product/edit/{id}', [ProductController::class, 'update']);
+Route::get('product/delete/{id}', [ProductController::class, 'destroy']);
