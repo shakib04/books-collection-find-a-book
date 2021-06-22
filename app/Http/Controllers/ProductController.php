@@ -16,6 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = DB::table('products')->get();
+        //return dd($products);
         return view('Product.product_list', compact('products'));
     }
 
@@ -37,6 +38,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validated = $request->validate([
+            'product_name' => 'required|unique:posts|max:255',
+            'product_descr' => 'required'
+        ]);
+
         if ($request->hasFile('product_image')) {
             $file = $request->file('product_image');
             // echo "file name: ".$file->getClientOriginalName()."<br>";

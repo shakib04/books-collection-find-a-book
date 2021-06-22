@@ -3,6 +3,16 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
 <form class="form-horizontal" method="POST" enctype="multipart/form-data">
     @csrf
     <fieldset>
@@ -16,7 +26,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="product_name">PRODUCT NAME</label>
             <div class="col-md-4">
-                <input id="product_name" name="product_name" placeholder="PRODUCT NAME" class="form-control input-md" required="" type="text">
+                <input id="product_name" name="product_name" placeholder="PRODUCT NAME" class="form-control input-md" type="text">
 
             </div>
         </div>
@@ -25,7 +35,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="product_name_fr">PRODUCT DESCRIPTION</label>
             <div class="col-md-4">
-                <input id="product_name_fr" name="product_descr" placeholder="PRODUCT DESCRIPTION" class="form-control input-md" required="" type="text">
+                <input id="product_name_fr" name="product_descr" placeholder="PRODUCT DESCRIPTION" class="form-control input-md" type="text">
 
             </div>
         </div>

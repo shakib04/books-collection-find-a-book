@@ -195,13 +195,13 @@ Route::get('/user/profile', function () {
     return view('Book_Mid_Project.user_profile');
 });
 
-Route::get('/user/myaccount', function () {
-    return view('Book_Mid_Project.my-account');
-})->middleware('authorization');
+Route::get('/user/myaccount', [UserController::class, 'MyAccount'])->middleware('authorization');
+Route::post('/user/myaccount', [UserController::class, 'EditProfile'])->middleware('authorization');
 
-Route::get('/user/edit/profile', function () {
-    return view('Book_Mid_Project.edit_profile');
-});
+//address
+Route::get('/user/edit/address/{id}', [UserController::class, 'EditAddress'])->middleware('authorization');
+Route::post('/user/edit/address/{id}', [UserController::class, 'UpdateAddress'])->middleware('authorization');
+
 
 Route::get('/user/notify', function () {
     return view('Book_Mid_Project.notification');

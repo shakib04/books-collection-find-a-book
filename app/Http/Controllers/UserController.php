@@ -84,8 +84,59 @@ class UserController extends Controller
     }
 
 
+    public function MyAccount()
+    {
+        $id = session('userid');
+        $user = DB::table('users')->where('id', $id)->first();
+        $allAddress = DB::table('address')->where('userid', $id)->get();
+        $data = [
+            'userDetials' => $user,
+            'allAddress' => $allAddress
+        ];
+        return view('Book_Mid_Project.my-account')->with($data);
+        //return dd($data);
+    }
+
+
     public function EditProfile(Request $request)
     {
-        
+
+        $id = session('userid');
+        DB::table('users')
+            ->where('id', $id)
+            ->update(['name' => $request->name, 'gender' => $request->gender]);
+        return redirect('/user/myaccount');
+    }
+
+    public function EditAddress($address_id)
+    {
+        $userid = session('userid');
+        $address = DB::table('address')->where([['userid', '=', $userid], ['address_id', '=', $address_id]])->first();
+        return view('Book_Mid_Project.edit_address')->with('userAddress', $address);
+    }
+
+    public function UpdateAddress($address_id, Request $request)
+    {
+        $userid = session('userid');
+
+        $data = array(
+            "House_No" => $request->House_No,
+            "Road_No" => $request->Road_No,
+            "Postal_Code" => $request->Postal_Code,
+            "Area" => $request->Area,
+            "City" => $request->City,
+            "Country" => $request->Country,
+            "Mobile_Number" => $request->Mobile_Number
+        );
+
+        $address = DB::table('address')->where([['userid', '=', $userid], ['address_id', '=', $address_id]])->update($data);
+        return redirect('/user/myaccount');
+    }
+
+    public function AllShippingAddress()
+    {
+        $userid = session('userid');
+        $allAddress = DB::table('address')->where([['userid', '=', $userid]]);
+        return view('Book_Mid_Project.my-account')->with('allAddress', $allAddress);
     }
 }

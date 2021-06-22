@@ -53,8 +53,8 @@
                         <div class="pt-5 pt-lg-8 pl-md-5 pl-lg-9 space-bottom-2 space-bottom-lg-3 mb-xl-1">
                             <h6 class="font-weight-medium font-size-7 ml-lg-1 mb-lg-8 pb-xl-1">Dashboard</h6>
                             <div class="ml-lg-1 mb-4">
-                                <span class="font-size-22">Hello alitfn58</span>
-                                <span class="font-size-2"> (not alitfn58? <a class="link-black-100" href="#">Log
+                                <span class="font-size-22">Hello {{ Session::get('userFullName')}}</span>
+                                <span class="font-size-2"> (not {{ Session::get('userFullName')}}? <a class="link-black-100" href="{{url('/logou')}}">Log
                                         out</a>)</span>
                             </div>
                             <div class="mb-4">
@@ -206,36 +206,27 @@
                         <div class="pt-5 pl-md-5 pt-lg-8 pl-lg-9 space-bottom-2 mb-lg-4">
                             <h6 class="font-weight-medium font-size-7 ml-lg-1 mb-5 mb-lg-8 pb-xl-1">Addresses</h6>
                             <div class="row row-cols-1 row-cols-md-2">
+
+                                @foreach ($allAddress as $address)
                                 <div class="col">
                                     <div class="mb-6 mb-md-0">
-                                        <h6 class="font-weight-medium font-size-22 mb-3">Billing Address
+                                        <h6 class="font-weight-medium font-size-22 mb-3">Shipping Address
                                         </h6>
                                         <address class="d-flex flex-column mb-4">
-                                            <span class="text-gray-600 font-size-2">Ali Tufan</span>
-                                            <span class="text-gray-600 font-size-2">Bedford St,</span>
-                                            <span class="text-gray-600 font-size-2">Covent Garden, </span>
-                                            <span class="text-gray-600 font-size-2">London WC2E 9ED</span>
-                                            <span class="text-gray-600 font-size-2">United Kingdom</span>
+                                            <span class="text-gray-600 font-size-2">House No: {{$address->House_No}}</span>
+                                            <span class="text-gray-600 font-size-2">Road No: {{$address->Road_No}}</span>
+                                            <span class="text-gray-600 font-size-2">Area: {{$address->Area}}</span>
+                                            <span class="text-gray-600 font-size-2">{{$address->City}}, {{$address->Postal_Code}}</span>
+                                            <span class="text-gray-600 font-size-2">{{$address->Country}}</span>
+                                            <span class="text-gray-600 font-size-2">Mobile Number: {{$address->Mobile_Number}}</span>
                                         </address>
                                         <div class="d-flex">
-                                            <button type="submit" class="btn btn-dark width-150 rounded-0 btn-wide font-weight-medium">Edit</button>
+                                            <a href="{{url('/user/edit/address')}}/{{$address->address_id}}" class="btn btn-dark width-150 rounded-0 btn-wide font-weight-medium">Edit</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <h6 class="font-weight-medium font-size-22 mb-3">Shipping Address
-                                    </h6>
-                                    <address class="d-flex flex-column mb-4">
-                                        <span class="text-gray-600 font-size-2">Ali Tufan</span>
-                                        <span class="text-gray-600 font-size-2">Bedford St,</span>
-                                        <span class="text-gray-600 font-size-2">Covent Garden, </span>
-                                        <span class="text-gray-600 font-size-2">London WC2E 9ED</span>
-                                        <span class="text-gray-600 font-size-2">United Kingdom</span>
-                                    </address>
-                                    <div class="d-flex">
-                                        <button type="submit" class="btn btn-dark width-150 rounded-0 btn-wide font-weight-medium">Edit</button>
-                                    </div>
-                                </div>
+                                @endforeach
+
                             </div>
                         </div>
                     </div>
@@ -248,30 +239,36 @@
                                 <form action="" method="post">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-md-6 mb-4">
+                                        <!-- <div class="col-md-6 mb-4">
                                             <div class="js-form-message">
                                                 <label for="exampleFormControlInput1">First name *</label>
                                                 <input type="text" class="form-control rounded-0 pl-3 placeholder-color-3" id="exampleFormControlInput1" name="name" aria-label="Jack Wayley" placeholder="Ali" required="" data-error-class="u-has-error" data-msg="Please enter your name." data-success-class="u-has-success">
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-md-6 mb-4">
                                             <div class="js-form-message">
-                                                <label for="exampleFormControlInput2">Last name *</label>
-                                                <input type="text" class="form-control rounded-0 pl-3 placeholder-color-3" id="exampleFormControlInput2" name="name" aria-label="Jack Wayley" placeholder="TUF.." required="" data-error-class="u-has-error" data-msg="Please enter your name." data-success-class="u-has-success">
+                                                <label for="exampleFormControlInput2">Full name *</label>
+                                                <input type="text" value="{{$userDetials->name}}" class="form-control rounded-0 pl-3 placeholder-color-3" id="exampleFormControlInput2" name="name" aria-label="Jack Wayley" placeholder="Your Full Name" required="" data-error-class="u-has-error" data-msg="Please enter your name." data-success-class="u-has-success">
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-4">
                                             <div class="js-form-message">
-                                                <label for="exampleFormControlInput3">Display name</label>
-                                                <input type="text" class="form-control rounded-0" name="name" aria-label="Jack Wayley" id="exampleFormControlInput3" required="" data-error-class="u-has-error" data-msg="Please enter your name." data-success-class="u-has-success">
+                                                <label for="exampleFormControlInput3">Select Gender</label> <br>
+                                                @if ($userDetials->gender == "Male")
+                                                <input type="radio" value="Male" checked class="rounded-0" name="gender" aria-label="Jack Wayley" id="exampleFormControlInput3" required="" data-error-class="u-has-error" data-msg="Please select your gender." data-success-class="u-has-success"> Male
+                                                <input type="radio" value="Female" class="rounded-0" name="gender" aria-label="Jack Wayley" id="exampleFormControlInput3" required="" data-error-class="u-has-error" data-msg="Please select your gender." data-success-class="u-has-success"> Female
+                                                @elseif ($userDetials->gender == "Female")
+                                                <input type="radio" value="Male" class="rounded-0" name="gender" aria-label="Jack Wayley" id="exampleFormControlInput3" required="" data-error-class="u-has-error" data-msg="Please select your gender." data-success-class="u-has-success"> Male
+                                                <input type="radio" value="Female" checked class="rounded-0" name="gender" aria-label="Jack Wayley" id="exampleFormControlInput3" required="" data-error-class="u-has-error" data-msg="Please select your gender." data-success-class="u-has-success"> Female
+                                                @endif
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-4 mb-md-0">
+                                        <!-- <div class="col-md-12 mb-4 mb-md-0">
                                             <div class="js-form-message">
                                                 <label for="exampleFormControlInput4">Email address</label>
-                                                <input type="email" class="form-control rounded-0" name="name" id="exampleFormControlInput4" aria-label="Jack Wayley" required="" data-error-class="u-has-error" data-msg="Please enter your name." data-success-class="u-has-success">
+                                                <input type="email" value="{{$userDetials->email}}" class="form-control rounded-0" name="email" id="exampleFormControlInput4" aria-label="Jack Wayley" required="" data-error-class="u-has-error" data-msg="Please enter your name." data-success-class="u-has-success">
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <br>
                                         <br>
                                         <br>
