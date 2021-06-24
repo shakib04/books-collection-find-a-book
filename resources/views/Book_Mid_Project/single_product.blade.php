@@ -24,20 +24,20 @@
                         <figure class="woocommerce-product-gallery__wrapper pt-8 mb-0">
                             <div class="js-slick-carousel u-slick" data-pagi-classes="text-center u-slick__pagination my-4">
                                 <div class="js-slide">
-                                    <img src="https://demo2.madrasthemes.com/bookworm-html/redesigned-octo-fiesta/assets/img/300x452/img3.jpg" alt="Image Description" class="mx-auto img-fluid">
+                                    <img src="{{$book->BookSampleImage1}}" alt="Image Description" class="mx-auto img-fluid">
                                 </div>
                                 <div class="js-slide">
-                                    <img src="https://demo2.madrasthemes.com/bookworm-html/redesigned-octo-fiesta/assets/img/300x452/img3.jpg" alt="Image Description" class="mx-auto img-fluid">
+                                    <img src="{{$book->BookSampleImage2}}" alt="Image Description" class="mx-auto img-fluid">
                                 </div>
                                 <div class="js-slide">
-                                    <img src="https://demo2.madrasthemes.com/bookworm-html/redesigned-octo-fiesta/assets/img/300x452/img3.jpg" alt="Image Description" class="mx-auto img-fluid">
+                                    <img src="{{$book->BookSampleImage3}}" alt="Image Description" class="mx-auto img-fluid">
                                 </div>
                             </div>
                         </figure>
                     </div>
                     <div class="col-md-7 pl-0 summary entry-summary border-left">
                         <div class="space-top-2 px-4 px-xl-7 border-bottom pb-5">
-                            <h1 class="product_title entry-title font-size-7 mb-3">Where the Crawdads Sing</h1>
+                            <h1 class="product_title entry-title font-size-7 mb-3">{{$book->Name}}</h1>
                             <div class="font-size-2 mb-4">
                                 <span class="text-yellow-darker">
                                     <span class="fas fa-star"></span>
@@ -48,19 +48,19 @@
                                 </span>
                                 <span class="ml-3">(3,714)</span>
                                 <span class="ml-3 font-weight-medium">By (author)</span>
-                                <span class="ml-2 text-gray-600">Anna Banks</span>
+                                <span class="ml-2 text-gray-600">{{$book->AuthorName}}</span>
                             </div>
                             <p class="price font-size-22 font-weight-medium mb-3">
                                 <span class="woocommerce-Price-amount amount">
-                                    <span class="woocommerce-Price-currencySymbol">$</span>29.95
-                                </span> –
-                                <span class="woocommerce-Price-amount amount">
-                                    <span class="woocommerce-Price-currencySymbol">$</span>59.95
+                                    <span class="woocommerce-Price-currencySymbol">Taka </span>{{$book->Price}}
                                 </span>
+                                <!-- <span class="woocommerce-Price-amount amount">
+                                    <span class="woocommerce-Price-currencySymbol">$</span>59.95
+                                </span> -->
                             </p>
                             <div class="mb-2 font-size-2">
                                 <span class="font-weight-medium">Book Format:</span>
-                                <span class="ml-2 text-gray-600">Choose an option</span>
+                                <!-- <span class="ml-2 text-gray-600">Choose an option</span> -->
                             </div>
 
                             <div class="row mx-gutters-2 mb-4">
@@ -69,11 +69,11 @@
                                         <input type="radio" id="typeOfListingRadio1" name="typeOfListingRadio1" class="custom-control-input checkbox-outline__input">
                                         <label class="border-bottom d-block checkbox-outline__label py-3 px-1 mb-0" for="typeOfListingRadio1">
                                             <span class="d-block">Hardcover</span>
-                                            <span class="">$9.59</span>
+                                            <span class="">{{$book->Price}} Taka</span>
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-6 col-md-3 mb-3 mb-md-0">
+                                <!-- <div class="col-6 col-md-3 mb-3 mb-md-0">
                                     <div class="">
                                         <input type="radio" id="typeOfListingRadio2" name="typeOfListingRadio1" class="custom-control-input checkbox-outline__input" checked>
                                         <label class="border-bottom d-block checkbox-outline__label py-3 px-1 mb-0" for="typeOfListingRadio2">
@@ -81,8 +81,8 @@
                                             <span class="">$9.59</span>
                                         </label>
                                     </div>
-                                </div>
-                                <div class="col-6 col-md-3">
+                                </div> -->
+                                <!-- <div class="col-6 col-md-3">
                                     <div class="">
                                         <input type="radio" id="typeOfListingRadio3" name="typeOfListingRadio1" class="custom-control-input checkbox-outline__input">
                                         <label class="border-bottom d-block checkbox-outline__label py-3 px-1 mb-0" for="typeOfListingRadio3">
@@ -90,16 +90,14 @@
                                             <span class="">$9.59</span>
                                         </label>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="woocommerce-product-details__short-description font-size-2 mb-5">
-                                <p class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Excepteur sint occaecat.</p>
+                                <p class="">{{$book->BookDescription}}</p>
                             </div>
                             <form class="cart d-md-flex align-items-center" method="post" enctype="multipart/form-data">
+                                @csrf
                                 <div class="quantity mb-4 mb-md-0 d-flex align-items-center">
 
                                     <div class="border px-3 width-120">
@@ -174,31 +172,15 @@
                                 <div class="col-xl-8 offset-xl-2">
                                     <div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--description panel entry-content wc-tab pt-9">
 
-                                        <p class="mb-0">We aim to show you accurate product information.
-                                            Manufacturers, suppliers and others provide what you see here, and we
-                                            have not verified it. See our disclaimer</p>
-                                        <p class="mb-0">#1 New York Times Bestseller</p>
-                                        <p class="mb-0">A Reese Witherspoon x Hello Sunshine Book Club Pick</p>
-                                        <p class="mb-4">"I can't even express how much I love this book! I didn't
-                                            want this story to end!"--Reese Witherspoon</p>
-                                        <p class="mb-4">"Painfully beautiful."--The New York Times Book Review</p>
-                                        <p>"Perfect for fans of Barbara Kingsolver."--Bustle</p>
-                                        <p class="mb-4">For years, rumors of the "Marsh Girl" have haunted Barkley
-                                            Cove, a quiet town on the North Carolina coast. So in late 1969, when
-                                            handsome Chase Andrews is found dead, the locals immediately suspect Kya
-                                            Clark, the so-called Marsh Girl. But Kya is not what they say. Sensitive
-                                            and intelligent, she has survived for years alone in the marsh that she
-                                            calls home, finding friends in the gulls and lessons in the sand. Then
-                                            the time comes when she yearns to be touched and loved. When two young
-                                            men from town become intrigued by her wild beauty, Kya opens herself to
-                                            a new life--until the unthinkable happens.</p>
-                                        <p class="mb-4">Perfect for fans of Barbara Kingsolver and Karen Russell,
-                                            Where the Crawdads Sing is at once an exquisite ode to the natural
-                                            world, a heartbreaking coming-of-age story, and a surprising tale of
-                                            possible murder. Owens reminds us that we are forever shaped by the
-                                            children we once were, and that we are all subject to the beautiful and
-                                            violent secrets that nature keeps</p>
-                                        <p>WHERE THE CRAWDADS LP</p>
+                                        <p class="mb-0">Publisher: {{$book->Publisher}}</p>
+                                        <p class="mb-0">Publishing Year: {{$book->PublishingYear}}</p>
+                                        <p class="mb-0">Book Condition: {{$book->BookCondition}}</p>
+                                        <p class="mb-4">Language: {{$book->Language}}</p>
+                                        <p class="mb-4">Copies Left: {{$book->Quantity}}</p>
+                                        <p class="mb-4">Shop Name: {{$book->SellerId}}</p>
+                                        <p class="mb-4">Author {{$book->AuthorName}}</p>
+                                        <p>Genre: {{$book->CategoryId}}</p>
+                                        <p>{{$book->BookDescription}}</p>
 
                                     </div>
                                 </div>

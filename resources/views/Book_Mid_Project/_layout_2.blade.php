@@ -112,6 +112,7 @@
                         <li class="nav-item"><a href="#" class="nav-link link-black-100"><i class="fas fa-map-marker-alt"></i></a></li>
                         <li class="nav-item"><a href="{{url('/user/notify')}}" class="nav-link link-black-100"><i class="fas fa-toggle-off"></i></a></li>
                         <li class="nav-item"><a href="#" class="nav-link link-black-100"><i class="fas fa-heart"></i></a></li>
+                        <li class="nav-item"><a href="{{url('/book/shopping/cart')}}" class="nav-link link-black-100"><i class="fas fa-shopping-bag"></i></a></li>
                         <li class="nav-item">
 
                             <a id="sidebarNavToggler" href="javascript:;" role="button" class="nav-link link-black-100" aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent" data-unfold-type="css-animation" data-unfold-overlay='{
@@ -124,7 +125,7 @@
 
                         </li>
                         <li class="nav-item">
-
+                            <!--  -->
                             <a id="sidebarNavToggler1" href="javascript:;" role="button" class="nav-link link-black-100 position-relative" aria-controls="sidebarContent1" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent1" data-unfold-type="css-animation" data-unfold-overlay='{
                                     "className": "u-sidebar-bg-overlay",
                                     "background": "rgba(0, 0, 0, .7)",

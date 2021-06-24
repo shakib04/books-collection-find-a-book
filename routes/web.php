@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DemoController;
 use App\Http\Controllers\CricbuzzController;
@@ -162,14 +163,11 @@ Route::get('/service/landing', function () {
     return view('Book_Mid_Project.landing_page.landing');
 });
 
-Route::get('/book/list', function () {
-    return view('Book_Mid_Project.index');
-});
+Route::get('/book/list', [BookController::class, 'getAllBooksForHome']);
 
 
-Route::get('/book/bookById', function () {
-    return view('Book_Mid_Project.single_product');
-});
+Route::get('/book/details/{id}', [BookController::class, 'BookById']);
+Route::post('/book/details/{id}', [BookController::class, 'AddToCart']);
 
 
 Route::get('/book/test', function () {
@@ -180,9 +178,7 @@ Route::get('/book/search', function () {
     return view('Book_Mid_Project.search');
 });
 
-Route::get('/book/cart', function () {
-    return view('Book_Mid_Project.cart');
-});
+Route::get('/book/shopping/cart', [BookController::class, 'showCart']);
 
 Route::get('/book/checkout', function () {
     return view('Book_Mid_Project.checkout');

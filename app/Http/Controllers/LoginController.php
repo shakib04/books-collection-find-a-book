@@ -16,8 +16,8 @@ class LoginController extends Controller
     {
 
         $validated = $request->validate([
-            'email' => 'required|max:10',
-            'password' => 'required',
+            'email' => 'required|max:50',
+            'password' => 'required|min:8|max:20',
         ]);
 
         if ($request->email == $_POST['password']) {

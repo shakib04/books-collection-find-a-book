@@ -13,3 +13,5 @@ $user = DB::table('users')->where('id', $id)->first();
             'allAddress' => $allAddress
         ];
         return view('Book_Mid_Project.my-account')->with($data);
+
+        //form r action diye same page e multiple post request deoya jai (has)
