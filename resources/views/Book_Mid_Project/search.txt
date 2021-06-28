@@ -31,3 +31,8 @@ return ($result) ?  redirect()->route('MyAddress') : '<h2>Failed to create</h2>'
 
 //get last insert Id
 https://www.laravelcode.com/post/laravel-55-get-last-inserted-id-with-example
+
+//like query
+BookingDates::where('email', Input::get('email'))
+    ->orWhere('name', 'like', '%' . Input::get('name') . '%')->get();
+

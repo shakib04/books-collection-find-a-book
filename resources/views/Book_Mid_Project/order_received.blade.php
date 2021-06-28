@@ -26,11 +26,10 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="row" class="pr-0 py-0 font-weight-medium">1779</th>
-                                        <td class="pr-0 py-0 font-weight-medium">March 24, 2020</td>
-                                        <td class="pr-0 py-0 font-weight-medium text-md-center">$2930</td>
-                                        <td class="pr-md-4 py-0 font-weight-medium text-md-right">Direct bank
-                                            transfer</td>
+                                        <th scope="row" class="pr-0 py-0 font-weight-medium">{{$orderDetails->order_id}}</th>
+                                        <td class="pr-0 py-0 font-weight-medium">{{$orderDetails->order_created}}</td>
+                                        <td class="pr-0 py-0 font-weight-medium text-md-center">Taka {{$orderDetails->amount}}</td>
+                                        <td class="pr-md-4 py-0 font-weight-medium text-md-right">{{$orderDetails->payment_method}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -40,18 +39,21 @@
                         <div class="px-3 px-md-4">
                             <div class="ml-md-2">
                                 <h6 class="font-size-3 on-weight-medium mb-4 pb-1">Order Details</h6>
+                                @foreach($orderItems as $book)
                                 <div class="d-flex justify-content-between mb-4">
                                     <div class="d-flex align-items-baseline">
                                         <div>
-                                            <h6 class="font-size-2 font-weight-normal mb-1">The Overdue Life of <br>
-                                                Amy Byler</h6>
-                                            <span class="font-size-2 text-gray-600">(Paperback, English)</span>
+                                            <h6 class="font-size-2 font-weight-normal mb-1">{{$book->Name}} <br>
+                                                {{$book->AuthorName}}
+                                            </h6>
+                                            <span class="font-size-2 text-gray-600">(Paperback, {{$book->Language}})</span>
                                         </div>
-                                        <span class="font-size-2 ml-4 ml-md-8">x7</span>
+                                        <span class="font-size-2 ml-4 ml-md-8">x{{$book->Quantity}}</span>
                                     </div>
-                                    <span class="font-weight-medium font-size-2">$951</span>
+                                    <span class="font-weight-medium font-size-2">Taka {{$book->Price}}</span>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                @endforeach
+                                <!-- <div class="d-flex justify-content-between">
                                     <div class="d-flex align-items-baseline">
                                         <div>
                                             <h6 class="font-size-2 font-weight-normal mb-1">All You Can Ever Know:
@@ -62,7 +64,7 @@
                                         <span class="font-size-2 ml-2 ml-md-6">x3</span>
                                     </div>
                                     <span class="font-weight-medium font-size-2">$348</span>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -70,7 +72,7 @@
                         <ul class="list-unstyled px-3 pl-md-5 pr-md-4 mb-0">
                             <li class="d-flex justify-content-between py-2">
                                 <span class="font-weight-medium font-size-2">Subtotal:</span>
-                                <span class="font-weight-medium font-size-2">$951</span>
+                                <span class="font-weight-medium font-size-2">Taka {{$orderDetails->amount}}</span>
                             </li>
                             <li class="d-flex justify-content-between py-2">
                                 <span class="font-weight-medium font-size-2">Shipping:</span>
@@ -78,7 +80,7 @@
                             </li>
                             <li class="d-flex justify-content-between pt-2">
                                 <span class="font-weight-medium font-size-2">Payment Method:</span>
-                                <span class="font-weight-medium font-size-2">Direct bank transfer</span>
+                                <span class="font-weight-medium font-size-2">{{$orderDetails->payment_method}}</span>
                             </li>
                         </ul>
                     </div>
@@ -86,13 +88,13 @@
                         <div class="px-3 pl-md-5 pr-md-4">
                             <div class="d-flex justify-content-between">
                                 <span class="font-size-2 font-weight-medium">Total</span>
-                                <span class="font-weight-medium fon-size-2">$2498</span>
+                                <span class="font-weight-medium fon-size-2">Taka {{$orderDetails->amount}}</span>
                             </div>
                         </div>
                     </div>
                     <div class="px-3 pl-md-5 pr-md-4 mb-6 pb-xl-1">
                         <div class="row row-cols-1 row-cols-md-2">
-                            <div class="col">
+                            <!-- <div class="col">
                                 <div class="mb-6 mb-md-0">
                                     <h6 class="font-weight-medium font-size-22 mb-3">Billing Address
                                     </h6>
@@ -104,16 +106,17 @@
                                         <span class="text-gray-600 font-size-2">United Kingdom</span>
                                     </address>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col">
                                 <h6 class="font-weight-medium font-size-22 mb-3">Shipping Address
                                 </h6>
                                 <address class="d-flex flex-column mb-0">
-                                    <span class="text-gray-600 font-size-2">Ali Tufan</span>
-                                    <span class="text-gray-600 font-size-2">Bedford St,</span>
-                                    <span class="text-gray-600 font-size-2">Covent Garden, </span>
-                                    <span class="text-gray-600 font-size-2">London WC2E 9ED</span>
-                                    <span class="text-gray-600 font-size-2">United Kingdom</span>
+                                    <span class="text-gray-600 font-size-2">{{Session('userFullName')}}</span>
+                                    <span class="text-gray-600 font-size-2">House No: {{$orderDetails->House_No}}</span>
+                                    <span class="text-gray-600 font-size-2">Road No: {{$orderDetails->Road_No}}</span>
+                                    <span class="text-gray-600 font-size-2">{{$orderDetails->Area}}, {{$orderDetails->City}}, {{$orderDetails->Postal_Code}}</span>
+                                    <span class="text-gray-600 font-size-2">{{$orderDetails->Country}}</span>
+                                    <span class="text-gray-600 font-size-2">Mobile: {{$orderDetails->Mobile_Number}}</span>
                                 </address>
                             </div>
                         </div>

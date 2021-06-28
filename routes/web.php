@@ -153,11 +153,11 @@ Route::get('/book/user/login', function () {
     return view('Book_Mid_Project.login');
 })->name('login');
 
-Route::post('/book/user/login', [LoginController::class, 'BookProjectUserLogin']);
+Route::post('/book/user/login', [LoginController::class, 'BookProjectUserLogin'])->name('loginPage');
 
 Route::get('/book/user/signup', function () {
     return view('Book_Mid_Project.signup');
-});
+})->name('signupPage');
 
 Route::post('/book/user/signup', [UserController::class, 'UserRegistration']);
 
@@ -167,6 +167,7 @@ Route::get('/service/landing', function () {
 
 Route::get('/book/list', [BookController::class, 'getAllBooksForHome']);
 
+Route::get('book/search/p', [BookController::class, 'SearchBooks']);
 
 Route::get('/book/details/{id}', [BookController::class, 'BookById'])->name('BookById');
 
@@ -198,11 +199,17 @@ Route::middleware(['authorization'])->group(function () {
 
     Route::get('/book/shopping/cart', [BookController::class, 'showCart']);
 
+    //order list myaccount 
+    Route::get('/user/myaccount/orders', [PurchaseController::class, 'OrderList'])->name('OrderList');
+
+    //order by id
+    Route::get('/user/order/{id}', [PurchaseController::class, 'GetOrderById'])->name('order_received_confirm');
+
     //make order
     Route::get('/book/checkout', [PurchaseController::class, 'CheckoutPage'])->middleware('BlankCart');
     Route::post('/book/checkout', [PurchaseController::class, 'MakeOrder'])->middleware('BlankCart');
 
-    Route::get('/user/blankcart', function(){
+    Route::get('/user/blankcart', function () {
         return view('Book_Mid_Project.my_account.empty_cart');
     });
 
@@ -230,9 +237,7 @@ Route::get('/user/notify', function () {
     return view('Book_Mid_Project.notification');
 });
 
-Route::get('/user/order/orderId', function () {
-    return view('Book_Mid_Project.order_received');
-})->name('order_received_confirm');
+
 
 
 

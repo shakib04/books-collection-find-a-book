@@ -62,7 +62,7 @@ class UserController extends Controller
         $validated = $request->validate([
             'full_name' => 'required|max:25',
             'email' => 'required|unique:users|max:30',
-            'password' => 'required|max:32|min:5',
+            'password' => 'required|max:32|min:5|confirmed',
             'phone_number' => 'required|max:32|min:5',
             'gender' => 'required|'
 
@@ -73,11 +73,12 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => $request->password,
             'phone_number' => $request->phone_number,
-            'gender' => $request->gender
+            'gender' => $request->gender,
+            'user_type' => "3"
         ]);
 
         if ($result) {
-            return "User Registration Complete";
+            return "User Registration Complete. <a href='/book/user/login'>Login Here</a>";
         } else {
             return "Failed to register";
         }

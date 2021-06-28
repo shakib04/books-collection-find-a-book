@@ -14,7 +14,7 @@
 								<h2 class="hero__title font-size-14 mb-4" data-scs-animation-in="fadeInUp" data-scs-animation-delay="300">
 									<span class="hero__title-line-1 font-weight-regular d-block">Featured Books of
 										the</span>
-									<span class="hero__title-line-2 font-weight-bold d-block">February</span>
+									<span class="hero__title-line-2 font-weight-bold d-block">June</span>
 								</h2>
 								<a href="../shop/v1.html" class="btn btn-dark btn-wide rounded-0 hero__btn" data-scs-animation-in="fadeInLeft" data-scs-animation-delay="400">See More</a>
 							</div>
@@ -33,7 +33,7 @@
 								<h2 class="hero__title font-size-14 mb-4" data-scs-animation-in="fadeInUp" data-scs-animation-delay="300">
 									<span class="hero__title-line-1 font-weight-regular d-block">Featured Books of
 										the</span>
-									<span class="hero__title-line-2 font-weight-bold d-block">February</span>
+									<span class="hero__title-line-2 font-weight-bold d-block">May</span>
 								</h2>
 								<a href="../shop/v1.html" class="btn btn-dark btn-wide rounded-0 hero__btn" data-scs-animation-in="fadeInLeft" data-scs-animation-delay="400">See More</a>
 							</div>
@@ -52,7 +52,7 @@
 								<h2 class="hero__title font-size-14 mb-4" data-scs-animation-in="fadeInUp" data-scs-animation-delay="300">
 									<span class="hero__title-line-1 font-weight-regular d-block">Featured Books of
 										the</span>
-									<span class="hero__title-line-2 font-weight-bold d-block">February</span>
+									<span class="hero__title-line-2 font-weight-bold d-block">April</span>
 								</h2>
 								<a href="../shop/v1.html" class="btn btn-dark btn-wide rounded-0 hero__btn" data-scs-animation-in="fadeInLeft" data-scs-animation-delay="400">See More</a>
 							</div>
@@ -71,7 +71,7 @@
 								<h2 class="hero__title font-size-14 mb-4" data-scs-animation-in="fadeInUp" data-scs-animation-delay="300">
 									<span class="hero__title-line-1 font-weight-regular d-block">Featured Books of
 										the</span>
-									<span class="hero__title-line-2 font-weight-bold d-block">February</span>
+									<span class="hero__title-line-2 font-weight-bold d-block">March</span>
 								</h2>
 								<a href="../shop/v1.html" class="btn btn-dark btn-wide rounded-0 hero__btn" data-scs-animation-in="fadeInLeft" data-scs-animation-delay="400">See More</a>
 							</div>

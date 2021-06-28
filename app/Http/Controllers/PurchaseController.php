@@ -24,6 +24,32 @@ class PurchaseController extends Controller
         return view('Book_Mid_Project.checkout2')->with($data);
     }
 
+    public function GetOrderById($id)
+    {
+        $orderDetails = DB::table('orders')
+            ->join('payments', 'orders.payment_id', '=', 'payments.payment_id')
+            ->join('address', 'address.address_id', '=', 'payments.address_id')
+            ->where([['orders.userid', '=', Session('userid')], ['orders.order_id', '=', $id]])
+            ->first();
+
+        $orderItems = DB::table('order_items')
+            ->join('books', 'books.Id', '=', 'order_items.book_id')
+            ->where('order_id',  '=', $orderDetails->order_id)
+            ->get();
+        //return dd($orderDetails);
+        $data = [
+            "orderDetails" => $orderDetails,
+            "orderItems" => $orderItems,
+        ];
+        return view('Book_Mid_Project.order_received')->with($data);
+    }
+
+    public function OrderList()
+    {
+        $orders = DB::table('orders')->get();
+        return view('Book_Mid_Project.my_account.my_order')->with('orders', $orders);
+    }
+
     public function MakeOrder(Request $request)
     {
         //validation
@@ -71,12 +97,13 @@ class PurchaseController extends Controller
 
         //return dd($paymentDetails);
 
-        $result = DB::table('payments')->insert($paymentDetails);
+        $paymentId = DB::table('payments')->insertGetId($paymentDetails);
 
-        if ($result) {
+        if (true) {
             $orderData = [
                 "userid" => $userid,
-                "amount" => $totalAmountToPay
+                "amount" => $totalAmountToPay,
+                "payment_id" => $paymentId
             ];
 
             $orderId = DB::table('orders')->insertGetId($orderData);
@@ -94,7 +121,7 @@ class PurchaseController extends Controller
                 }
             }
 
-            return redirect()->route('order_received_confirm');
+            return redirect()->route('order_received_confirm', $orderId);
         }
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Input;
 
 class BookController extends Controller
 {
@@ -11,6 +12,14 @@ class BookController extends Controller
     {
         $booksOfHome = DB::table('books')->get();
         return view('Book_Mid_Project.index')->with('booksOfHome', $booksOfHome);
+    }
+
+    public function SearchBooks(Request $request)
+    {
+        $result = DB::table('books')
+            ->where('Name', $request->input('name'))
+            ->orWhere('Name', 'like', '%' . $request->input('name') . '%')->get();
+        return dd($result);
     }
 
     public function getBooksByCatagory($category)

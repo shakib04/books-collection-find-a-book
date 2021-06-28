@@ -158,7 +158,7 @@
                                     <input type="password" class="form-control" name="password" placeholder="Password *" value="" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Confirm Password *" value="" />
+                                    <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password *" value="" />
                                 </div>
                                 <div class="form-group">
                                     <div class="maxl">
@@ -197,7 +197,7 @@
                         </div>
                     </form>
 
-                    
+
 
                     @if ($errors->any())
                     <div class="alert alert-danger">
