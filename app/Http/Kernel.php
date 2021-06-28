@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'age' => \App\Http\Middleware\AgeMiddleware::class,
         'loginSession' => \App\Http\Middleware\CheckLoggedIn::class,
-        'authorization' => \App\Http\Middleware\AuthorizationMiddleware::class
+        'authorization' => \App\Http\Middleware\AuthorizationMiddleware::class,
+        'BlankCart' => \App\Http\Middleware\BlankCart::class
     ];
 }

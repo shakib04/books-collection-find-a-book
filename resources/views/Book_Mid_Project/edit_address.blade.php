@@ -2,8 +2,6 @@
 
 @section('content')
 
-
-
 <div class="border-bottom mb-6 pb-6 mb-lg-8 pb-lg-9">
     <div class="pt-5 pl-md-5 pt-lg-8 pl-lg-9">
         <h6 class="font-weight-medium font-size-7 ml-lg-1 mb-lg-8 pb-xl-1">Address Details

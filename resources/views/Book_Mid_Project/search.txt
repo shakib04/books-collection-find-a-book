@@ -15,3 +15,19 @@ $user = DB::table('users')->where('id', $id)->first();
         return view('Book_Mid_Project.my-account')->with($data);
 
         //form r action diye same page e multiple post request deoya jai (has)
+
+//return ternary operator
+return ($result) ?  redirect()->route('MyAddress') : '<h2>Failed to create</h2>';
+
+
+//query builder sum multiply(DB::raw() method)
+       $total = DB::table('books')
+            ->join('shopping_cart', 'books.Id', '=', 'shopping_cart.BookId')
+            ->where('shopping_cart.UserId', '=', Session('userid'))
+            ->sum(DB::raw('shopping_cart.Quantity * books.Price'));
+
+//get old value of input
+{{Request::old('body')}}
+
+//get last insert Id
+https://www.laravelcode.com/post/laravel-55-get-last-inserted-id-with-example

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\CricbuzzController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\Testcontroller;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -166,37 +168,62 @@ Route::get('/service/landing', function () {
 Route::get('/book/list', [BookController::class, 'getAllBooksForHome']);
 
 
-Route::get('/book/details/{id}', [BookController::class, 'BookById']);
-Route::post('/book/details/{id}', [BookController::class, 'AddToCart']);
+Route::get('/book/details/{id}', [BookController::class, 'BookById'])->name('BookById');
+
 
 
 Route::get('/book/test', function () {
     return view('Book_Mid_Project._layout_2');
 });
 
-Route::get('/book/search', function () {
-    return view('Book_Mid_Project.search');
+
+
+Route::middleware(['authorization'])->group(function () {
+
+    Route::post('/book/details/{id}', [BookController::class, 'AddToCart']);
+
+    //add to wish
+    Route::get('/add/wishlist/{id}', [BookController::class, 'AddToWishList']);
+    Route::get('/add/wishlist/force/{id}', [BookController::class, 'AddToWishListForce']);
+
+    //remove wishitem
+    Route::get('/remove/wishlist/{bookid}', [BookController::class, 'RemoveWishList']);
+
+    //wish list (myaccount)
+    Route::get('/user/wishlist', [BookController::class, 'GetWishList'])->name('WishList');
+
+    Route::get('/book/search', function () {
+        return view('Book_Mid_Project.search');
+    });
+
+    Route::get('/book/shopping/cart', [BookController::class, 'showCart']);
+
+    //make order
+    Route::get('/book/checkout', [PurchaseController::class, 'CheckoutPage'])->middleware('BlankCart');
+    Route::post('/book/checkout', [PurchaseController::class, 'MakeOrder'])->middleware('BlankCart');
+
+    Route::get('/user/blankcart', function(){
+        return view('Book_Mid_Project.my_account.empty_cart');
+    });
+
+    //user crud
+    Route::get('/user/profile', function () {
+        return view('Book_Mid_Project.user_profile');
+    });
+
+    Route::get('/user/myaccount', [UserController::class, 'MyAccount'])->name('Dashboard');
+    Route::post('/user/myaccount', [UserController::class, 'EditProfile']);
+
+    //address
+    Route::get('/user/add/address', [AddressController::class, 'CreateAddress'])->name('CreateAddress');
+    Route::post('/user/add/address', [AddressController::class, 'StoreAddress']);
+    Route::get('/user/myaccount/address', [UserController::class, 'MyAddress'])->name('MyAddress');
+    Route::get('/user/edit/address/{id}', [UserController::class, 'EditAddress']);
+    Route::post('/user/edit/address/{id}', [UserController::class, 'UpdateAddress']);
+    Route::get('/user/delete/address/{id}', [AddressController::class, 'DeleteAddress']);
+    Route::get('/user/confDelete/address/{id}', [AddressController::class, 'ConfirmDelete']);
 });
 
-Route::get('/book/shopping/cart', [BookController::class, 'showCart']);
-
-Route::get('/book/checkout', function () {
-    return view('Book_Mid_Project.checkout');
-});
-
-
-
-//user crud
-Route::get('/user/profile', function () {
-    return view('Book_Mid_Project.user_profile');
-});
-
-Route::get('/user/myaccount', [UserController::class, 'MyAccount'])->middleware('authorization');
-Route::post('/user/myaccount', [UserController::class, 'EditProfile'])->middleware('authorization');
-
-//address
-Route::get('/user/edit/address/{id}', [UserController::class, 'EditAddress'])->middleware('authorization');
-Route::post('/user/edit/address/{id}', [UserController::class, 'UpdateAddress'])->middleware('authorization');
 
 
 Route::get('/user/notify', function () {
@@ -205,7 +232,7 @@ Route::get('/user/notify', function () {
 
 Route::get('/user/order/orderId', function () {
     return view('Book_Mid_Project.order_received');
-});
+})->name('order_received_confirm');
 
 
 

@@ -93,8 +93,32 @@ class UserController extends Controller
             'userDetials' => $user,
             'allAddress' => $allAddress
         ];
-        return view('Book_Mid_Project.my-account')->with($data);
+        return view('Book_Mid_Project.my_account.dashboard')->with($data);
         //return dd($data);
+    }
+
+    public function MyAddress()
+    {
+        $id = session('userid');
+        $user = DB::table('users')->where('id', $id)->first();
+        $allAddress = DB::table('address')->where('userid', $id)->get();
+        $data = [
+            'userDetials' => $user,
+            'allAddress' => $allAddress
+        ];
+        return view('Book_Mid_Project.my_account.my_address')->with($data);
+    }
+
+    public function AccountDetails()
+    {
+        $id = session('userid');
+        $user = DB::table('users')->where('id', $id)->first();
+        $allAddress = DB::table('address')->where('userid', $id)->get();
+        $data = [
+            'userDetials' => $user,
+            'allAddress' => $allAddress
+        ];
+        return view('Book_Mid_Project.my_account.account_details')->with($data);
     }
 
 
@@ -139,4 +163,6 @@ class UserController extends Controller
         $allAddress = DB::table('address')->where([['userid', '=', $userid]]);
         return view('Book_Mid_Project.my-account')->with('allAddress', $allAddress);
     }
+
+    
 }

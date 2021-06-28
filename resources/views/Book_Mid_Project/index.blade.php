@@ -195,8 +195,8 @@
 								<span class="product__add-to-cart">ADD TO CART</span>
 								<span class="product__add-to-cart-icon font-size-4"><i class="flaticon-icon-126515"></i></span>
 							</a>
-							<a href="../shop/single-product-v1.html" class="mr-1 h-p-bg btn btn-outline-primary border-0">
-								<i class="flaticon-switch"></i>
+							<a href="/add/wishlist/{{$book->Id}}" class="mr-1 h-p-bg btn btn-outline-primary border-0">
+								<i class="fas fa-save"></i>
 							</a>
 							<a href="../shop/single-product-v1.html" class="h-p-bg btn btn-outline-primary border-0">
 								<i class="flaticon-heart"></i>
