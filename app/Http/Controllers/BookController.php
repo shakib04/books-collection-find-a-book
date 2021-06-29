@@ -16,10 +16,11 @@ class BookController extends Controller
 
     public function SearchBooks(Request $request)
     {
-        $result = DB::table('books')
+        $booksOfHome = DB::table('books')
             ->where('Name', $request->input('name'))
             ->orWhere('Name', 'like', '%' . $request->input('name') . '%')->get();
-        return dd($result);
+
+        return view('Book_Mid_Project.index')->with('booksOfHome', $booksOfHome);
     }
 
     public function getBooksByCatagory($category)
@@ -29,8 +30,13 @@ class BookController extends Controller
     public function BookById($id)
     {
         $book = DB::table('books')->where('id', $id)->first();
+        $bookAllReviews = DB::table('book_review')->where('book_id', $id)->get();
+        $data = [
+            "book" => $book,
+            "bookAllReviews" => $bookAllReviews
+        ];
         //return dd($book);
-        return view('Book_Mid_Project.single_product')->with('book', $book);
+        return view('Book_Mid_Project.single_product')->with($data);
     }
 
     public function AddToCart(Request $request, $id)

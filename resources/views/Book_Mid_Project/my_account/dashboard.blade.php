@@ -8,6 +8,36 @@
             <span class="font-size-2"> (not {{ Session::get('userFullName')}}? <a class="link-black-100" href="{{url('/logout')}}">Log
                     out</a>)</span>
         </div>
+
+
+        <div class="col">
+            <div class="border py-6 text-center">
+                <img width="180" height="150" src="/upload/users/profile_pic/{{$userDetials->profile_pic}}" class="btn btn-primary rounded-circle px-4 mb-2" alt="Upload Your Profile Picture" />
+                <div class="font-size-3 mb-xl-1"></div>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <form class="form-horizontal" method="POST" action="/user/profile/picture" enctype="multipart/form-data">
+                @csrf
+
+                <!-- File Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="filebutton">Upload Here</label>
+                    <div class="col-md-4">
+                        <input id="filebutton" name="profile_image" class="input-file" type="file">
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <input class="btn btn-success" type="submit" value="Change Profile Pic" name="" id="">
+                    <div class="col-md-4">
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div class="mb-4">
             <p class="mb-0 font-size-2 ml-lg-1 text-gray-600">From your account dashboard you
                 can view your <span class="text-dark">recent orders,</span> manage your <span class="text-dark">shipping and billing addresses,</span> and edit your <span class="text-dark">password and account details.</span></p>

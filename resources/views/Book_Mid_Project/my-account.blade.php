@@ -29,7 +29,7 @@
                             </a>
                         </li>
                         <li class="nav-item mx-0">
-                            <a class="nav-link d-flex align-items-center px-0" id="pills-five-example1-tab" data-toggle="pill" href="#pills-five-example1" role="tab" aria-controls="pills-five-example1" aria-selected="false">
+                            <a class="nav-link d-flex align-items-center px-0" id="pills-five-example1-tab" data-toggle="" href="{{route('account_details')}}" role="tab" aria-controls="pills-five-example1" aria-selected="false">
                                 <span class="font-weight-normal text-gray-600">Account details</span>
                             </a>
                         </li>

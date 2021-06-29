@@ -110,7 +110,7 @@ class UserController extends Controller
         return view('Book_Mid_Project.my_account.my_address')->with($data);
     }
 
-    public function AccountDetails()
+    public function Account_Details()
     {
         $id = session('userid');
         $user = DB::table('users')->where('id', $id)->first();
@@ -119,7 +119,39 @@ class UserController extends Controller
             'userDetials' => $user,
             'allAddress' => $allAddress
         ];
+
         return view('Book_Mid_Project.my_account.account_details')->with($data);
+    }
+
+
+    public function ChangeProfiePicture(Request $request)
+    {
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            // echo "file name: ".$file->getClientOriginalName()."<br>";
+            // echo "file extension: ".$file->getClientOriginalExtension()."<br>";
+            // echo "file Mime Type: ".$file->getType()."<br>";
+            // echo "file Size: ".$file->getSize();
+
+            $fileName = $request->session()->get('userid') . time() . "." . $file->getClientOriginalExtension();
+            if ($file->move('upload/users/profile_pic', $fileName)) {
+                echo "success";
+            } else {
+                echo "error..";
+            }
+        } else {
+            return "file not found! ";
+        }
+
+        $result = DB::table('users')
+            ->where('id', $request->session()->get('userid'))
+            ->update(['profile_pic' => $fileName]);
+
+        if ($result) {
+            return redirect("/user/myaccount");
+        } else {
+            return "Failed to Upload";
+        }
     }
 
 
@@ -130,7 +162,32 @@ class UserController extends Controller
         DB::table('users')
             ->where('id', $id)
             ->update(['name' => $request->name, 'gender' => $request->gender]);
-        return redirect('/user/myaccount');
+        $request->session()->put('userFullName', $request->name);
+        return redirect()->route('account_details');
+    }
+
+    public function ChangePassword(Request $request)
+    {
+        $validated = $request->validate([
+            'Current_Password' => 'required|min:5|max:32',
+            'New_Password' => 'required|confirmed|min:5|max:32'
+        ]);
+
+        $id = session('userid');
+
+        $result =  DB::table('users')
+            ->where([['id', '=', $id], ['password', '=', $request->Current_Password]])
+            ->first();
+
+        //flash message
+        if ($result) {
+            DB::table('users')
+                ->where('id', $id)
+                ->update(['password' => $request->New_Password]);
+            return redirect()->route('account_details');
+        } else {
+            return "<h2>Old Password is incorrect</h2>";
+        }
     }
 
     public function EditAddress($address_id)
@@ -164,6 +221,4 @@ class UserController extends Controller
         $allAddress = DB::table('address')->where([['userid', '=', $userid]]);
         return view('Book_Mid_Project.my-account')->with('allAddress', $allAddress);
     }
-
-    
 }

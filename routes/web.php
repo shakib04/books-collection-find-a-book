@@ -10,6 +10,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\Testcontroller;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -170,18 +172,20 @@ Route::get('/book/list', [BookController::class, 'getAllBooksForHome']);
 Route::get('book/search/p', [BookController::class, 'SearchBooks']);
 
 Route::get('/book/details/{id}', [BookController::class, 'BookById'])->name('BookById');
-
-
-
-Route::get('/book/test', function () {
-    return view('Book_Mid_Project._layout_2');
-});
-
+Route::get('/shop/details/{shopId}', [ShopController::class, 'ShopById'])->name('ShopById');
 
 
 Route::middleware(['authorization'])->group(function () {
 
     Route::post('/book/details/{id}', [BookController::class, 'AddToCart']);
+
+    //account_details
+    Route::get('/user/account_details', [UserController::class, 'Account_Details'])->name('account_details');
+    Route::post('/user/account_details', [UserController::class, 'EditProfile'])->name('account_details');
+
+    //change password
+    Route::post('/user/changepassword', [UserController::class, 'ChangePassword'])->name('ChangePassword');
+    Route::post('/user/profile/picture', [UserController::class, 'ChangeProfiePicture'])->name('ChangeProfiePicture');
 
     //add to wish
     Route::get('/add/wishlist/{id}', [BookController::class, 'AddToWishList']);
@@ -196,6 +200,12 @@ Route::middleware(['authorization'])->group(function () {
     Route::get('/book/search', function () {
         return view('Book_Mid_Project.search');
     });
+
+    //follow unfollow shop
+    Route::get('/follow/shop/{shopId}', [ShopController::class, 'FollowShop']);
+    Route::get('/unfollow/shop/{shopId}', [ShopController::class, 'UnfollowShop']);
+    Route::post('/shop/contact/{shopId}', [ShopController::class, 'ContactShop']);
+    
 
     Route::get('/book/shopping/cart', [BookController::class, 'showCart']);
 
@@ -212,6 +222,10 @@ Route::middleware(['authorization'])->group(function () {
     Route::get('/user/blankcart', function () {
         return view('Book_Mid_Project.my_account.empty_cart');
     });
+
+
+    //review a book
+    Route::post('/book/review/{id}', [ReviewController::class, 'ReviewABook'])->name('review_book');
 
     //user crud
     Route::get('/user/profile', function () {

@@ -198,8 +198,8 @@
 							<a href="/add/wishlist/{{$book->Id}}" class="mr-1 h-p-bg btn btn-outline-primary border-0">
 								<i class="fas fa-save"></i>
 							</a>
-							<a href="../shop/single-product-v1.html" class="h-p-bg btn btn-outline-primary border-0">
-								<i class="flaticon-heart"></i>
+							<a href="/shop/details/{{$book->shop_id_ref_books}}" class="h-p-bg btn btn-outline-primary border-0">
+								<i class="fas fa-store-alt"></i>
 							</a>
 						</div>
 					</div>
