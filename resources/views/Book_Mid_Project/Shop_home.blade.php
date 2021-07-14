@@ -503,7 +503,6 @@
 
 
 
-
                     <div class="js-next d-none d-lg-block u-slick__arrow u-slick__arrow-centered--y fas flaticon-next u-slick__arrow-inner u-slick__arrow-inner--right mr-lg-n10 slick-arrow" style="" aria-disabled="false"></div>
                 </ul>
             </div>

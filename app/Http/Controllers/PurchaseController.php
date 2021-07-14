@@ -44,9 +44,9 @@ class PurchaseController extends Controller
         return view('Book_Mid_Project.order_received')->with($data);
     }
 
-    public function OrderList()
+    public function OrderList(Request $request)
     {
-        $orders = DB::table('orders')->get();
+        $orders = DB::table('orders')->where('userid', $request->session()->get('userid'))->get();
         return view('Book_Mid_Project.my_account.my_order')->with('orders', $orders);
     }
 

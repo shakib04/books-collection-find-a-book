@@ -64,6 +64,15 @@ class LoginController extends Controller
             $name = $result->name;
             $request->session()->put('userid', $id);
             $request->session()->put('userFullName', $name);
+
+
+            //birthday
+            $convert_date = strtotime($result->dob);
+            $month = date('F', $convert_date);
+            $day = date('j', $convert_date);
+            if ($month == date('F') && $day == date('j'))
+                $request->session()->put('birthday', 'yes');
+
             //session(['userid' => $id]);
             //return print_r($result->id);
             return redirect('/user/myaccount');

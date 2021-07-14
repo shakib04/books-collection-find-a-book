@@ -98,38 +98,52 @@ class BookController extends Controller
 
     public function AddToWishList(Request $request, $id)
     {
+
+
         $userid = $request->session()->get('userid');
         $list = DB::table('userbookwishlist')->where('userid', $userid)->first();
         $AlreadyAdded = false;
-        if ($list->bookid1 == $id or $list->bookid2 == $id or $list->bookid3 == $id) {
-            return "<h2> Already in Wishlist</h2>";
-            $AlreadyAdded = true;
-        }
-        if ($list->bookid1 != "" and $list->bookid2 != "" and $list->bookid3 != "") {
-            return "<h2>Wishlist Filled Up! Replace with <a href='/add/wishlist/force/" . $id . "'>Lastone</a></h2>";
-        }
 
-        if ($list->bookid1 == "") {
-            DB::table('userbookwishlist')
-                ->where('userid', $userid)
-                ->update(['bookid1' => $id]);
-            return redirect("/book/list");
-        } else if ($list->bookid2 == "") {
-            DB::table('userbookwishlist')
-                ->where('userid', $userid)
-                ->update(['bookid2' => $id]);
-            return redirect("/book/list");
-        } else if ($list->bookid3 == "") {
-            DB::table('userbookwishlist')
-                ->where('userid', $userid)
-                ->update(['bookid3' => $id]);
+
+
+        if ($list) {
+            if ($list->bookid1 == $id or $list->bookid2 == $id or $list->bookid3 == $id) {
+                return "<h2> Already in Wishlist</h2>";
+                $AlreadyAdded = true;
+            }
+
+            if ($list->bookid1 != "" and $list->bookid2 != "" and $list->bookid3 != "") {
+                return "<h2>Wishlist Filled Up! Replace with <a href='/add/wishlist/force/" . $id . "'>Lastone</a></h2>";
+            }
+
+            if ($list->bookid1 == "") {
+                DB::table('userbookwishlist')
+                    ->where('userid', $userid)
+                    ->update(['bookid1' => $id]);
+                return redirect("/book/list");
+            } else if ($list->bookid2 == "") {
+                DB::table('userbookwishlist')
+                    ->where('userid', $userid)
+                    ->update(['bookid2' => $id]);
+                return redirect("/book/list");
+            } else if ($list->bookid3 == "") {
+                DB::table('userbookwishlist')
+                    ->where('userid', $userid)
+                    ->update(['bookid3' => $id]);
+                return redirect("/book/list");
+            }
+            return dd($AlreadyAdded);
+            //check ase naki already ("Already Exits")
+            //already fill up naki
+            // 3 tar beshi add hole last r ta replace option
+
+        } else {
+
+            DB::table('userbookwishlist')->insert(
+                ['userid' => $userid, 'bookid1' => $id]
+            );
             return redirect("/book/list");
         }
-        return dd($AlreadyAdded);
-        //check ase naki already ("Already Exits")
-        //already fill up naki
-        // 3 tar beshi add hole last r ta replace option
-
     }
 
     public function AddToWishListForce(Request $request, $id)
@@ -146,19 +160,26 @@ class BookController extends Controller
         $userid = session('userid');
         $wishlist = DB::table('userbookwishlist')->where([['userid', '=', $userid]])->first();
         //return dd($wishlist);
-        $book1 = DB::table('books')->where([['Id', '=', $wishlist->bookid1]])->first();
-        $book2 = DB::table('books')->where([['Id', '=', $wishlist->bookid2]])->first();
-        $book3 = DB::table('books')->where([['Id', '=', $wishlist->bookid3]])->first();
-        $books = [
-            "book1" => $book1,
-            "book2" => $book2,
-            "book3" => $book3
-        ];
-        $data = [
-            "wishlist" => $wishlist,
-            "books" => $books
-        ];
-        return view('Book_Mid_Project.my_account.WishList')->with($data);
+        if ($wishlist) {
+            $book1 = DB::table('books')->where([['Id', '=', $wishlist->bookid1]])->first();
+            $book2 = DB::table('books')->where([['Id', '=', $wishlist->bookid2]])->first();
+            $book3 = DB::table('books')->where([['Id', '=', $wishlist->bookid3]])->first();
+            $books = [
+                "book1" => $book1,
+                "book2" => $book2,
+                "book3" => $book3
+            ];
+            $data = [
+                "wishlist" => $wishlist,
+                "books" => $books
+            ];
+            return view('Book_Mid_Project.my_account.WishList')->with($data);
+        } else {
+            $data = [
+                "wishlist" => []
+            ];
+            return view('Book_Mid_Project.my_account.WishList')->with($data);
+        }
     }
 
     public function RemoveWishList($bookid)

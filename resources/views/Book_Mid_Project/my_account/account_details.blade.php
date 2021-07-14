@@ -5,6 +5,16 @@
     <div class="pt-5 pl-md-5 pt-lg-8 pl-lg-9">
         <h6 class="font-weight-medium font-size-7 ml-lg-1 mb-lg-8 pb-xl-1">Account Details
         </h6>
+        <div class="col-md-6 mb-4">
+            <div class="js-form-message">
+                <p for="exampleFormControlInput2">Date of Birth: {{ date("F jS, Y", strtotime($userDetials->dob)) }}</p>
+                @php
+                if(Session('birthday'))
+                echo "<h3 class='text-primary'>Today is Your Birthday! Receive 2% off for Any Purchase</h3>";
+                @endphp
+
+            </div>
+        </div>
         <div class="font-weight-medium font-size-22 mb-4 pb-xl-1">Edit Account</div>
         <form action="" method="post">
             @csrf
@@ -21,6 +31,9 @@
                         <input type="text" value="{{$userDetials->name}}" class="form-control rounded-0 pl-3 placeholder-color-3" id="exampleFormControlInput2" name="name" aria-label="Jack Wayley" placeholder="Your Full Name" required="" data-error-class="u-has-error" data-msg="Please enter your name." data-success-class="u-has-success">
                     </div>
                 </div>
+
+
+
                 <div class="col-md-12 mb-4">
                     <div class="js-form-message">
                         <label for="exampleFormControlInput3">Select Gender</label> <br>
