@@ -24,12 +24,31 @@ class UserController extends Controller
 
     public function UserHome()
     {
+
         return view('class_work.user');
     }
 
     public function getAllUsers()
     {
-        return view('class_work.home')->with('users', $this->users);
+        //return "this is all user";
+        return $this->users;
+        //return view('class_work.home')->with('users', $this->users);
+    }
+
+    public function insertNewUser(Request $request)
+    {
+        $jsonString = file_get_contents(base_path('resources/my_json_files/userInfo.json'));
+        $json_arr = json_decode($jsonString, true);
+
+        //$json_arr = $json_arr['users'];
+
+        array_push($json_arr['users'], array('id' => (int)rand(100, 1000000), 'username' => $request->username, 'email' => $request->email, 'password' => $request->password));
+
+        $newJsonString = json_encode($json_arr);
+        file_put_contents(base_path('resources/my_json_files/userInfo.json'), $newJsonString);
+
+        return $newJsonString;
+        //return view('class_work.home')->with('users', $this->users);
     }
 
     public function deleteUser($id)

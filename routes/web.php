@@ -5,7 +5,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DemoController;
-use App\Http\Controllers\CricbuzzController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
@@ -96,12 +95,6 @@ Route::get('nav', [LoginController::class, 'valueSend']);
 
 
 //cricbuzz routing with extends
-
-Route::get('cricbuzz', [CricbuzzController::class, 'home'])->name('home');
-
-Route::get('scores', function () {
-    return view('cricbuzz.scores');
-});
 
 
 Route::get('getAllUsers', [UserController::class, 'getAllUsers']);
