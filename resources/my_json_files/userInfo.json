@@ -1,1 +1,70 @@
-{"users":[{"id":1,"username":"shakib","email":"s@mail.com","password":"123"},{"id":2,"username":"joy","email":"j@mail.com","password":"123"},{"id":3,"username":"rabbi","email":"r@mail.com","password":"123"},{"id":4,"username":"mou","email":"m@mail.ovo","password":"1425"},{"id":"5","username":"mou","email":"m@mail.ovo","password":"1425"},{"id":"5","username":"mou","email":"m@mail.ovo","password":"1425"},{"id":"6","username":"joybangla","email":"jjasdsa@mail.c","password":"dsadas"},{"id":6,"username":"joybangla","email":"jjasdsa@mail.c","password":"dsadas"},{"id":6,"username":"joybangla","email":"jjasdsa@mail.c","password":"dsadas"},{"id":6,"username":"joybangla","email":"jjasdsa@mail.c","password":"dsadas"},{"id":419520,"username":"joybangla","email":"jjasdsa@mail.c","password":"dsadas"},{"id":133684,"username":"joybangla","email":"jjasdsa@mail.c","password":"dsadas"}]}
+{
+    "users": {
+        "0": {
+            "id": 1,
+            "username": "rabbi",
+            "email": "rabbi@mail.c",
+            "password": "dummypass"
+        },
+        "1": {
+            "id": 2,
+            "username": "joy",
+            "email": "j@mail.com",
+            "password": "123"
+        },
+        "2": {
+            "id": 3,
+            "username": "rabbi",
+            "email": "r@mail.com",
+            "password": "123"
+        },
+        "3": {
+            "id": 4,
+            "username": "mou",
+            "email": "m@mail.ovo",
+            "password": "1425"
+        },
+        "9": {
+            "id": 6,
+            "username": "joybangla",
+            "email": "jjasdsa@mail.c",
+            "password": "dsadas"
+        },
+        "10": {
+            "id": 419520,
+            "username": "joybangla",
+            "email": "jjasdsa@mail.c",
+            "password": "dsadas"
+        },
+        "11": {
+            "id": 133684,
+            "username": "joybangla",
+            "email": "jjasdsa@mail.c",
+            "password": "dsadas"
+        },
+        "12": {
+            "id": 563094,
+            "username": "rabbi",
+            "email": "rabbi@mail.c",
+            "password": "dummypass"
+        },
+        "13": {
+            "id": 905606,
+            "username": "ali",
+            "email": "ali@email.com",
+            "password": "ali"
+        },
+        "14": {
+            "id": 279955,
+            "username": "ali 2",
+            "email": "ali 2@email.com",
+            "password": "ali 2"
+        },
+        "15": {
+            "id": 287435,
+            "username": "test",
+            "email": "test@test",
+            "password": "tet"
+        }
+    }
+}

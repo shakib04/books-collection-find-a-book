@@ -30,7 +30,7 @@ class UserController extends Controller
 
     public function getAllUsers()
     {
-        //return "this is all user";
+        //return [];
         return $this->users;
         //return view('class_work.home')->with('users', $this->users);
     }
@@ -60,20 +60,58 @@ class UserController extends Controller
         }
     }
 
-    public function userDetails(Request $req)
+    public function confDeleteUser($id)
     {
-        $id = $req->id;
+        foreach ($this->users as $key => $user) {
+            if ($user['id'] == $id) {
+
+                unset($this->users[$key]);
+
+                $ar = array(
+                    "users" => $this->users
+                );
+
+                $newJsonString = json_encode($ar);
+                file_put_contents(base_path('resources/my_json_files/userInfo.json'), $newJsonString);
+                return $this->users;
+            }
+        }
+    }
+
+    public function userDetails(Request $req, $id)
+    {
+        //$id = $req->id;
         foreach ($this->users as $user) {
             if ($user['id'] == $id) {
-                return view('class_work.user_details_id')->with('user', $user);
+                return json_encode($user);
+                //return view('class_work.user_details_id')->with('user', $user);
             }
         }
 
-        return view('class_work.user_details_id')->with('user', []);
+        return json_encode([]);
+        //return view('class_work.user_details_id')->with('user', []);
     }
 
-    public function confDeleteUser()
+    public function updateUserDetails(Request $request, $id)
     {
+
+        foreach ($this->users as $key => $user) {
+            if ($user['id'] == $id) {
+                $user['username'] = $request->username;
+                $user['email'] = $request->email;
+                $user['password'] = $request->password;
+
+                $this->users[$key] = $user;
+
+                $ar = array(
+                    "users" => $this->users
+                );
+
+                $newJsonString = json_encode($ar);
+                file_put_contents(base_path('resources/my_json_files/userInfo.json'), $newJsonString);
+                return $this->users[$key];
+            }
+        }
     }
 
     public function UserRegistration(Request $request)
@@ -115,18 +153,6 @@ class UserController extends Controller
         ];
         return view('Book_Mid_Project.my_account.dashboard')->with($data);
         //return dd($data);
-    }
-
-    public function MyAddress()
-    {
-        $id = session('userid');
-        $user = DB::table('users')->where('id', $id)->first();
-        $allAddress = DB::table('address')->where('userid', $id)->get();
-        $data = [
-            'userDetials' => $user,
-            'allAddress' => $allAddress
-        ];
-        return view('Book_Mid_Project.my_account.my_address')->with($data);
     }
 
     public function Account_Details()
@@ -209,30 +235,7 @@ class UserController extends Controller
         }
     }
 
-    public function EditAddress($address_id)
-    {
-        $userid = session('userid');
-        $address = DB::table('address')->where([['userid', '=', $userid], ['address_id', '=', $address_id]])->first();
-        return view('Book_Mid_Project.edit_address')->with('userAddress', $address);
-    }
-
-    public function UpdateAddress($address_id, Request $request)
-    {
-        $userid = session('userid');
-
-        $data = array(
-            "House_No" => $request->House_No,
-            "Road_No" => $request->Road_No,
-            "Postal_Code" => $request->Postal_Code,
-            "Area" => $request->Area,
-            "City" => $request->City,
-            "Country" => $request->Country,
-            "Mobile_Number" => $request->Mobile_Number
-        );
-
-        $address = DB::table('address')->where([['userid', '=', $userid], ['address_id', '=', $address_id]])->update($data);
-        return redirect('/user/myaccount');
-    }
+    
 
     public function AllShippingAddress()
     {

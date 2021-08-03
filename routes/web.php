@@ -94,13 +94,17 @@ Route::post('login', [LoginController::class, 'verify']);
 Route::get('nav', [LoginController::class, 'valueSend']);
 
 
-//cricbuzz routing with extends
+//api routing with userdata json
+Route::get('getAllUsers', [UserController::class, 'getAllUsers']);
+Route::post('insertNewUser', [UserController::class, 'insertNewUser']);
 
 
 Route::get('getAllUsers', [UserController::class, 'getAllUsers']);
-Route::get('userDetails', [UserController::class, 'userDetails']);
+Route::get('userDetails/{id}', [UserController::class, 'userDetails']);
 Route::get('deleteUser/{id}', [UserController::class, 'deleteUser']);
 Route::post('deleteUser/{id}', [UserController::class, 'confDeleteUser']);
+
+Route::post('updateUserDetails/{id}', [UserController::class, 'updateUserDetails']);
 
 Route::get('/Employee', function () {
     $jsonString = file_get_contents(base_path('resources/my_json_files/userData.json'));
@@ -231,9 +235,9 @@ Route::middleware(['authorization'])->group(function () {
     //address
     Route::get('/user/add/address', [AddressController::class, 'CreateAddress'])->name('CreateAddress');
     Route::post('/user/add/address', [AddressController::class, 'StoreAddress']);
-    Route::get('/user/myaccount/address', [UserController::class, 'MyAddress'])->name('MyAddress');
-    Route::get('/user/edit/address/{id}', [UserController::class, 'EditAddress']);
-    Route::post('/user/edit/address/{id}', [UserController::class, 'UpdateAddress']);
+    Route::get('/user/myaccount/address', [AddressController::class, 'MyAddress'])->name('MyAddress');
+    Route::get('/user/edit/address/{id}', [AddressController::class, 'EditAddress']);
+    Route::post('/user/edit/address/{id}', [AddressController::class, 'UpdateAddress']);
     Route::get('/user/delete/address/{id}', [AddressController::class, 'DeleteAddress']);
     Route::get('/user/confDelete/address/{id}', [AddressController::class, 'ConfirmDelete']);
 });
