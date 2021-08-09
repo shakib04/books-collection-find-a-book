@@ -34,6 +34,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //address
 Route::get('/user/myaccount/address', [AddressController::class, 'MyAddress'])->name('MyAddress');
+Route::get('/user/address/{id}', [AddressController::class, 'GetAddressById']);
 Route::post('/user/add/address', [AddressController::class, 'StoreAddress']);
 Route::post('/user/edit/address/{id}', [AddressController::class, 'UpdateAddress']);
-Route::delete('/user/confDelete/address/{id}', [AddressController::class, 'ConfirmDelete']);
+Route::delete('/user/address/confDelete/{id}', [AddressController::class, 'ConfirmDelete']);
+
+
+//user profile
+Route::get('/user/myaccount', [UserController::class, 'MyAccount'])->name('Dashboard');
+Route::post('/user/profile/update', [UserController::class, 'EditProfile']);

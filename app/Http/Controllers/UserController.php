@@ -30,7 +30,6 @@ class UserController extends Controller
 
     public function getAllUsers()
     {
-        //return [];
         return $this->users;
         //return view('class_work.home')->with('users', $this->users);
     }
@@ -142,17 +141,34 @@ class UserController extends Controller
     }
 
 
-    public function MyAccount()
+    public function MyAccount(Request $request)
     {
-        $id = session('userid');
+        //$id = session('userid');
+        $id = $request->userid;
+
         $user = DB::table('users')->where('id', $id)->first();
         $allAddress = DB::table('address')->where('userid', $id)->get();
         $data = [
             'userDetials' => $user,
             'allAddress' => $allAddress
         ];
+
+        return response()->json($user);
         return view('Book_Mid_Project.my_account.dashboard')->with($data);
         //return dd($data);
+    }
+
+    public function EditProfile(Request $request)
+    {
+        //$id = session('userid');
+        $id = $request->userid;
+
+        $result = DB::table('users')
+        ->where('id', $id)
+            ->update(['name' => $request->name, 'gender' => $request->gender]);
+        //$request->session()->put('userFullName', $request->name);
+        return response()->json($result);
+        return redirect()->route('account_details');
     }
 
     public function Account_Details()
@@ -199,18 +215,6 @@ class UserController extends Controller
         }
     }
 
-
-    public function EditProfile(Request $request)
-    {
-
-        $id = session('userid');
-        DB::table('users')
-            ->where('id', $id)
-            ->update(['name' => $request->name, 'gender' => $request->gender]);
-        $request->session()->put('userFullName', $request->name);
-        return redirect()->route('account_details');
-    }
-
     public function ChangePassword(Request $request)
     {
         $validated = $request->validate([
@@ -235,7 +239,7 @@ class UserController extends Controller
         }
     }
 
-    
+
 
     public function AllShippingAddress()
     {

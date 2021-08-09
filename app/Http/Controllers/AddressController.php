@@ -80,6 +80,14 @@ class AddressController extends Controller
         return view('Book_Mid_Project.edit_address')->with('userAddress', $address);
     }
 
+    public function GetAddressById(Request $request, $address_id)
+    {
+        $userid = $request->userid;
+        $address = DB::table('address')->where([['userid', '=', $userid], ['address_id', '=', $address_id]])->first();
+        return json_encode($address);
+        return response()->json($address);
+    }
+
     public function UpdateAddress($address_id, Request $request)
     {
         //$userid = session('userid');
