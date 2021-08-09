@@ -11,6 +11,7 @@ class BookController extends Controller
     public function getAllBooksForHome()
     {
         $booksOfHome = DB::table('books')->get();
+        return response()->json($booksOfHome);
         return view('Book_Mid_Project.index')->with('booksOfHome', $booksOfHome);
     }
 
@@ -19,7 +20,7 @@ class BookController extends Controller
         $booksOfHome = DB::table('books')
             ->where('Name', $request->input('name'))
             ->orWhere('Name', 'like', '%' . $request->input('name') . '%')->get();
-
+        return $booksOfHome;
         return view('Book_Mid_Project.index')->with('booksOfHome', $booksOfHome);
     }
 
@@ -30,18 +31,20 @@ class BookController extends Controller
     public function BookById($id)
     {
         $book = DB::table('books')->where('id', $id)->first();
+        return json_encode($book);
         $bookAllReviews = DB::table('book_review')->where('book_id', $id)->get();
         $data = [
             "book" => $book,
             "bookAllReviews" => $bookAllReviews
         ];
-        //return dd($book);
+
         return view('Book_Mid_Project.single_product')->with($data);
     }
 
     public function AddToCart(Request $request, $id)
     {
-        $UserId = $request->session()->get('userid');
+        //$UserId = $request->session()->get('userid');
+        $UserId = $request->userid;
         $bookId = $id;
         $NewQuantity = $request->quantity;
         $productInCart = DB::table('shopping_cart')->where([
@@ -58,6 +61,11 @@ class BookController extends Controller
                     ['bookId', '=', $bookId]
                 ])->update(['quantity' => $OldQuantity + $NewQuantity]);
 
+            return [
+                "BookId" => $id,
+                "UserId" => $UserId,
+                "Quantity" => $OldQuantity + $NewQuantity
+            ];
             return redirect("/book/list");
         }
 
@@ -65,6 +73,12 @@ class BookController extends Controller
         $result = DB::table('shopping_cart')->insert(
             ['UserId' => $UserId, 'BookId' => $id, 'Quantity' => $NewQuantity]
         );
+
+        return [
+            "BookId" => $id,
+            "UserId" => $UserId,
+            "Quantity" => $NewQuantity
+        ];
 
         if ($result) {
             return redirect("/book/list");
@@ -75,10 +89,14 @@ class BookController extends Controller
 
     public function showCart(Request $request)
     {
-        $UserId = $request->session()->get('userid');
+        //$UserId = $request->session()->get('userid');
+        $UserId = $request->userid;
         $productInCart = DB::table('shopping_cart')->where([
             ['UserId', '=', $UserId]
         ])->get();
+
+
+
         $allBookId = array();
         foreach ($productInCart as $value) {
             array_push($allBookId, $value->BookId);
@@ -91,20 +109,17 @@ class BookController extends Controller
 
         $data = [$productInCart, $cartBooks];
 
-        //return dd($data);
 
+        return json_encode($data);
         return view('Book_Mid_Project.cart')->with('data', $data);
     }
 
     public function AddToWishList(Request $request, $id)
     {
-
-
-        $userid = $request->session()->get('userid');
+        //$userid = $request->session()->get('userid');
+        $userid = $request->userid;
         $list = DB::table('userbookwishlist')->where('userid', $userid)->first();
         $AlreadyAdded = false;
-
-
 
         if ($list) {
             if ($list->bookid1 == $id or $list->bookid2 == $id or $list->bookid3 == $id) {

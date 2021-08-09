@@ -164,7 +164,7 @@ class UserController extends Controller
         $id = $request->userid;
 
         $result = DB::table('users')
-        ->where('id', $id)
+            ->where('id', $id)
             ->update(['name' => $request->name, 'gender' => $request->gender]);
         //$request->session()->put('userFullName', $request->name);
         return response()->json($result);
@@ -217,24 +217,38 @@ class UserController extends Controller
 
     public function ChangePassword(Request $request)
     {
-        $validated = $request->validate([
-            'Current_Password' => 'required|min:5|max:32',
-            'New_Password' => 'required|confirmed|min:5|max:32'
-        ]);
 
-        $id = session('userid');
+
+        if (strlen($request->Current_Password) < 5 or strlen($request->New_Password) < 5) {
+            return json_encode(-2);
+        }
+
+        // $validated = $request->validate([
+        //     'Current_Password' => 'required|min:5|max:32',
+        //     'New_Password' => 'required|confirmed|min:5|max:32'
+        // ]);
+
+        // if (!$validated) {
+        //     return $validated;
+        // }
+
+        //$id = session('userid');
+        $id = $request->userid;
 
         $result =  DB::table('users')
             ->where([['id', '=', $id], ['password', '=', $request->Current_Password]])
             ->first();
+
 
         //flash message
         if ($result) {
             DB::table('users')
                 ->where('id', $id)
                 ->update(['password' => $request->New_Password]);
+            return 1;
             return redirect()->route('account_details');
         } else {
+            return -1; 
             return "<h2>Old Password is incorrect</h2>";
         }
     }
