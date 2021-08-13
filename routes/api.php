@@ -67,3 +67,5 @@ Route::get('/remove/wishlist/{bookid}', [BookController::class, 'RemoveWishList'
 
 //wish list (myaccount)
 Route::get('/user/wishlist', [BookController::class, 'GetWishList'])->name('WishList');
+
+

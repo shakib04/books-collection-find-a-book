@@ -95,8 +95,6 @@ class BookController extends Controller
             ['UserId', '=', $UserId]
         ])->get();
 
-
-
         $allBookId = array();
         foreach ($productInCart as $value) {
             array_push($allBookId, $value->BookId);
@@ -123,11 +121,13 @@ class BookController extends Controller
 
         if ($list) {
             if ($list->bookid1 == $id or $list->bookid2 == $id or $list->bookid3 == $id) {
+                return -3;
                 return "<h2> Already in Wishlist</h2>";
                 $AlreadyAdded = true;
             }
 
             if ($list->bookid1 != "" and $list->bookid2 != "" and $list->bookid3 != "") {
+                return -2;
                 return "<h2>Wishlist Filled Up! Replace with <a href='/add/wishlist/force/" . $id . "'>Lastone</a></h2>";
             }
 
@@ -135,16 +135,19 @@ class BookController extends Controller
                 DB::table('userbookwishlist')
                     ->where('userid', $userid)
                     ->update(['bookid1' => $id]);
+                return 1;
                 return redirect("/book/list");
             } else if ($list->bookid2 == "") {
                 DB::table('userbookwishlist')
                     ->where('userid', $userid)
                     ->update(['bookid2' => $id]);
+                return 1;
                 return redirect("/book/list");
             } else if ($list->bookid3 == "") {
                 DB::table('userbookwishlist')
                     ->where('userid', $userid)
                     ->update(['bookid3' => $id]);
+                return 1;
                 return redirect("/book/list");
             }
             return dd($AlreadyAdded);
@@ -157,22 +160,27 @@ class BookController extends Controller
             DB::table('userbookwishlist')->insert(
                 ['userid' => $userid, 'bookid1' => $id]
             );
+            return 1;
             return redirect("/book/list");
         }
     }
 
     public function AddToWishListForce(Request $request, $id)
     {
-        $userid = $request->session()->get('userid');
-        DB::table('userbookwishlist')
+        //$userid = $request->session()->get('userid');
+        $userid = $request->userid;
+        $result = DB::table('userbookwishlist')
             ->where('userid', $userid)
             ->update(['bookid3' => $id]);
+
+        return $result;
         return redirect("/book/list");
     }
 
-    public function GetWishList()
+    public function  GetWishList(Request $request)
     {
-        $userid = session('userid');
+        //$userid = session('userid');
+        $userid = $request->userid;
         $wishlist = DB::table('userbookwishlist')->where([['userid', '=', $userid]])->first();
         //return dd($wishlist);
         if ($wishlist) {
@@ -188,18 +196,21 @@ class BookController extends Controller
                 "wishlist" => $wishlist,
                 "books" => $books
             ];
+            return json_encode($data);
             return view('Book_Mid_Project.my_account.WishList')->with($data);
         } else {
             $data = [
-                "wishlist" => []
+                "wishlist" => [-1]
             ];
+            return json_encode($data);
             return view('Book_Mid_Project.my_account.WishList')->with($data);
         }
     }
 
-    public function RemoveWishList($bookid)
+    public function RemoveWishList($bookid, Request $request)
     {
-        $userid = session('userid');
+        //$userid = session('userid');
+        $userid = $request->userid;
         $result = DB::table('userbookwishlist')
             ->where('userid', $userid)
             ->first();
@@ -218,6 +229,7 @@ class BookController extends Controller
                 ->where('userid', $userid)
                 ->update(['bookid3' => ""]);
         }
+        return 1;
         return redirect()->route('WishList');
     }
 }
