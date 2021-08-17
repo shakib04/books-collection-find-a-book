@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Arr;
 
 class LoginController extends Controller
 {
@@ -47,17 +48,23 @@ class LoginController extends Controller
     }
 
 
+    //actual login
     public function BookProjectUserLogin(Request $request)
     {
-        $validated = $request->validate([
-            'email' => 'required',
-            'password' => 'required'
-        ]);
+
+        // $validated = $request->validate([
+        //     'email' => 'required',
+        //     'password' => 'required'
+        // ]);
 
         $result = DB::table('users')
             ->where('email', $request->email)
             ->where('password', $request->password)
             ->first();
+
+        
+        return json_encode($result);
+        return response()->json($result);
 
         if ($result) {
             $id = $result->id;
