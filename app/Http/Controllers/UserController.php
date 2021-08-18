@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -115,7 +116,10 @@ class UserController extends Controller
 
     public function UserRegistration(Request $request)
     {
-        $validated = $request->validate([
+
+        $Validator = Validator::make($request->all(), [
+
+
             'full_name' => 'required|max:25',
             'email' => 'required|unique:users|max:30',
             'password' => 'required|max:32|min:5|confirmed',
@@ -123,6 +127,21 @@ class UserController extends Controller
             'gender' => 'required|'
 
         ]);
+
+        if ($Validator->fails()) {
+            return response()->json($Validator->errors(), 422);
+        }
+
+        // $validated = $request->validate([
+        //     'full_name' => 'required|max:25',
+        //     'email' => 'required|unique:users|max:30',
+        //     'password' => 'required|max:32|min:5|confirmed',
+        //     'phone_number' => 'required|max:32|min:5',
+        //     'gender' => 'required|'
+
+        // ]);
+
+        // return $validated;
 
         $result = DB::table('users')->insert([
             'name' => $request->full_name,
@@ -132,6 +151,8 @@ class UserController extends Controller
             'gender' => $request->gender,
             'user_type' => "3"
         ]);
+
+        return $result;
 
         if ($result) {
             return "User Registration Complete. <a href='/book/user/login'>Login Here</a>";
@@ -248,7 +269,7 @@ class UserController extends Controller
             return 1;
             return redirect()->route('account_details');
         } else {
-            return -1; 
+            return -1;
             return "<h2>Old Password is incorrect</h2>";
         }
     }

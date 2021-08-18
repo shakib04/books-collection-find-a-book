@@ -37,6 +37,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //login
 Route::post('/user/login', [LoginController::class, 'BookProjectUserLogin']);
+Route::post('/book/user/signup', [UserController::class, 'UserRegistration']);
 
 //address
 Route::get('/user/myaccount/address', [AddressController::class, 'MyAddress'])->name('MyAddress');

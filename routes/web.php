@@ -158,7 +158,7 @@ Route::get('/book/user/signup', function () {
     return view('Book_Mid_Project.signup');
 })->name('signupPage');
 
-Route::post('/book/user/signup', [UserController::class, 'UserRegistration']);
+//Route::post('/book/user/signup', [UserController::class, 'UserRegistration']);
 
 Route::get('/service/landing', function () {
     return view('Book_Mid_Project.landing_page.landing');
