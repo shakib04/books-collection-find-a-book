@@ -26,12 +26,14 @@ class PurchaseController extends Controller
         return view('Book_Mid_Project.checkout2')->with($data);
     }
 
-    public function GetOrderById($id)
+    public function GetOrderById($id, Request $request)
     {
+        $userid = $request->userid;
+
         $orderDetails = DB::table('orders')
             ->join('payments', 'orders.payment_id', '=', 'payments.payment_id')
             ->join('address', 'address.address_id', '=', 'payments.address_id')
-            ->where([['orders.userid', '=', Session('userid')], ['orders.order_id', '=', $id]])
+            ->where([['orders.userid', '=', $userid], ['orders.order_id', '=', $id]])
             ->first();
 
         $orderItems = DB::table('order_items')
@@ -43,12 +45,16 @@ class PurchaseController extends Controller
             "orderDetails" => $orderDetails,
             "orderItems" => $orderItems,
         ];
+        return json_encode($data);
         return view('Book_Mid_Project.order_received')->with($data);
     }
 
     public function OrderList(Request $request)
     {
-        $orders = DB::table('orders')->where('userid', $request->session()->get('userid'))->get();
+        $userid = $request->userid;
+        //$orders = DB::table('orders')->where('userid', $request->session()->get('userid'))->get();
+        $orders = DB::table('orders')->where('userid', $userid)->get();
+        return json_encode($orders);
         return view('Book_Mid_Project.my_account.my_order')->with('orders', $orders);
     }
 
