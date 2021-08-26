@@ -43,7 +43,7 @@ Route::post('/book/user/signup', [UserController::class, 'UserRegistration']);
 Route::get('/user/myaccount/address', [AddressController::class, 'MyAddress'])->name('MyAddress');
 Route::get('/user/address/{id}', [AddressController::class, 'GetAddressById']);
 Route::post('/user/add/address', [AddressController::class, 'StoreAddress']);
-Route::post('/user/edit/address/{id}', [AddressController::class, 'UpdateAddress']);
+Route::put('/user/edit/address/{id}', [AddressController::class, 'UpdateAddress']);
 Route::delete('/user/address/confDelete/{id}', [AddressController::class, 'ConfirmDelete']);
 
 
@@ -62,6 +62,7 @@ Route::get('/book/details/{id}', [BookController::class, 'BookById'])->name('Boo
 //cart
 Route::get('/book/cart/list', [BookController::class, 'showCart']); //http://localhost:8000/api/book/cart/list?userid=1
 Route::post('/book/add/cart/{id}', [BookController::class, 'AddToCart']);
+Route::delete('/book/remove/cart/{id}', [BookController::class, 'RemoveFromCart']);
 
 
 //order

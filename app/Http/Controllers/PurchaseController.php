@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use Illuminate\Contracts\Session\Session;
 
 class PurchaseController extends Controller
 {

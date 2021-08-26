@@ -41,6 +41,15 @@ class BookController extends Controller
         return view('Book_Mid_Project.single_product')->with($data);
     }
 
+
+    public function RemoveFromCart(Request $request, $id)
+    {
+        $UserId = $request->userid;
+        $cart_id = $id;
+        $result = DB::table('shopping_cart')->where('cart_id', '=', $cart_id)->delete();
+        return json_encode($result);
+    }
+
     public function AddToCart(Request $request, $id)
     {
         //$UserId = $request->session()->get('userid');
@@ -89,8 +98,16 @@ class BookController extends Controller
 
     public function showCart(Request $request)
     {
+
+        $userid = $request->userid;
+        $totalAmountToPay = DB::table('books')
+            ->join('shopping_cart', 'books.Id', '=', 'shopping_cart.BookId')
+            ->where('shopping_cart.UserId', '=', $userid)
+            ->sum(DB::raw('shopping_cart.Quantity * books.Price'));
+
         //$UserId = $request->session()->get('userid');
         $UserId = $request->userid;
+
         $productInCart = DB::table('shopping_cart')->where([
             ['UserId', '=', $UserId]
         ])->get();
@@ -105,7 +122,7 @@ class BookController extends Controller
             array_push($cartBooks, DB::table('Books')->where('Id', $value)->first());
         }
 
-        $data = [$productInCart, $cartBooks];
+        $data = [$productInCart, $cartBooks, $totalAmountToPay];
 
 
         return json_encode($data);
